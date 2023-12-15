@@ -8,7 +8,7 @@ published: true
 
 ## はじめに
 こちらの記事は[Engineers and Creators Advent Calendar 2023](https://qiita.com/advent-calendar/2023/engineers-and-creators)の14日目の記事です。
-✅ 8日目の記事はこちら：[なんかく_じねんじょ]()
+✅ 8日目の記事はこちら：[最近の流行りの曲で使われがちな音楽手法](https://qiita.com/zinenzyo_machida/items/b39a75a35b4a7beec723)
 ✅ 10日目の記事はこちら：[Ebitengine関連で書く予定です！]()
 
 ## 自己紹介
