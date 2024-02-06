@@ -1,7 +1,7 @@
 ---
 title: "生成AIで連綿と紡がれる和歌アート作品「生成流転」の実装背景"
 emoji: "👘"
-type: "tech"
+type: "idea"
 topics: ["メディアアート","Unity","AI","和歌"]
 published: true
 ---

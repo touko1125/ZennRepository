@@ -1,7 +1,7 @@
 ---
 title: "スクールXテクニカル企画「アキメンター」に関して"
 emoji: "🧞"
-type: "tech"
+type: "idea"
 topics: ["Unity","ハッカソン","アキネーター"]
 published: true
 ---
