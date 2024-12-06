@@ -8,146 +8,90 @@ published: false
 ---
 
 ## はじめに
-こちらの記事は[Akihabara Advent Calendar 2024](https://adventar.org/calendars/10338)の12日目の記事です。
-✅ 11日目の記事はこちら：[]()
-✅ 13日目の記事はこちら：[]()
+こちらの記事は[Akihabara Advent Calendar 2024](https://adventar.org/calendars/10338)の7日目の記事です。  
+✅ 6日目の記事はこちら：[とっぽの何か](https://note.com/risako070310/n/n64fb1a5d138b)  
+✅ 8日目の記事はこちら：[がはくさんの何か]()  
 
-みなさんこんにちは、初めましての人は初めまして、お久しぶりの人はお久しぶりです。LifeisTech!秋葉原スクールでUnityコースとAIコースのメンターをしています、しまとーです！
+みなさんこんにちは！初めましての方は初めまして、お久しぶりの方はお久しぶりです。Life is Tech! 秋葉原スクールでUnityコースとAIコースのメンターをしています、しまとーです！  
 
-今回はUnity/AIコース混合を担当するしまとーならではの記事！ということで、2023年6月より提供開始された、**Unityランタイム上でAIモデルを動作させることができるライブラリ**、「Unity Sentis」の紹介記事を書いていければと思います！
+今回は、UnityとAIコースを担当している私ならではの記事として、2023年6月に提供が開始された**Unityランタイム上でAIモデルを動作させるライブラリ**「Unity Sentis」をご紹介します！
 https://unity.com/ja/products/sentis
 
-## Sentisとは
-Sentisは2023年6月よりUnityより提供され、2024年8月公開のsentis 2.xをもって公式版となりました。現在は軽微なバグ修正を行なったsentis 2.1.1が2024年11月にリリースされています。
-Sentisの最大の特徴として、以下の4つが挙げられています。
-1. プラットフォームの制限を受けない
-    Unityで対応しているすべてのプラットフォーム上で動作するようにビルド、組み込みを行うことが可能
-2. Unityでビルドをするだけで、バックエンドのデプロイなどの手間を必要としない
-3. 完全ローカルの範囲内で推論が可能
-    ネットワークの制限を受けることなく、さらにはクラウド上にデータが残ることもない。ネットワークの遅延の影響を受けることもない
-4. Unityランタイムの環境に合わせてモデルを最適化するため、推論にかかる速度がかなり効率化できる
+---
 
-詳しくは以下の動画に記されています。
+## Sentisとは
+Sentisは、Unityによって2023年6月に提供が開始され、2024年8月にリリースされた「Sentis 2.x」以降で公式版となりました。現在、軽微なバグ修正を施した「Sentis 2.1.1」が2024年11月に公開されています。  
+
+Sentisの主な特徴は以下の4点です：
+1. **プラットフォーム制限がない**  
+   Unityが対応しているすべてのプラットフォーム上で動作可能です。
+2. **バックエンド不要**  
+   Unityでのビルドだけで済み、バックエンドのデプロイ作業が不要です。
+3. **完全ローカルで動作**  
+   ネットワーク接続が不要で、クラウドにデータが保存される心配がなく、ネットワーク遅延の影響を受けません。
+4. **推論速度の最適化**  
+   Unityランタイム環境に合わせてモデルが最適化されるため、高速な推論が可能です。
+
+詳しくはこちらの動画で解説されています。
 https://www.youtube.com/watch?v=IfdRfy1Cynk
 
 ## 導入方法
 
-Sentisの導入方法は非常にシンプルです！まずは任意のプロジェクト(Unity 2023.2 (or later))を作成します。
+Sentisの導入はかなり簡単です！
 
-Unity Packege Managerを開き、
-![PackegeManagerを開く](/images/advent_sentis/packege_manager.png)
+1. Unity 2023.2以降を使用して任意のプロジェクトを作成します。  
+2. Package Managerを開きます。  
+![Package Managerを開く](/images/advent_sentis/packege_manager.png)  
+3. 「Install package by name」を選択します。  
+![パッケージ名の入力](/images/advent_sentis/install_byname.png)  
+4. **com.unity.sentis**を入力してインストールを完了させます。  
+![Sentisがインストールされた様子](/images/advent_sentis/installed_sentis.png)  
 
+## 使用の基本的な流れ
 
-「install packege by name」を選択します
-![パッケージ名の入力](/images/advent_sentis/install_byname.png)
+Sentisを利用して推論を行う際の流れは以下の通りです：
 
-最後に**com.unity.sentis**を入力してインストール完了です！
-![Sentisがインストールされた様子](/images/advent_sentis/installed_sentis.png)
+1. **ONNX形式のモデルをインポート**  
+   TensorFlowやScikit-learnなどで学習したモデルをONNX形式に変換。
+2. **ランタイム形式に変換**  
+   Unityランタイムで動作するモデル形式へ変換。
+3. **入力テンソルを作成**  
+   モデルに渡すためのデータを準備。
+4. **推論エンジン（Worker）を作成**  
+   Workerを使用して推論を実行。
+5. **結果をテンソル形式で受け取る**  
 
-## 使用の際の基本の流れ
-
-Sentisを使用して、推論を行う際の基本の流れは共通して以下の通りです。
-
-1. ONNX形式のモデルをインポート
-2. ランタイムで動作するモデル形式に変換
-3. モデルに渡すための入力テンソルを作成
-4. 推論エンジン(Worker)の作成
-5. 推論結果をテンソル形式で受け取る
-
-ONNX形式のモデルはTensorflowやsckikit-learnなどの様々な異なるフレームワークを通して学習したモデルを、共通の規格に落とし込み最適化したものです。
-Sentisは、機械学習モデルの共通規格であるONNX形式のモデルをインポートし、Unityランタイム上で推論を実行できるため、学習済みの様々な規格のモデルを、使用することができるようになります。
-
-ONNX形式のデータは以下のリポジトリ内に複数配布されています。
+ONNX形式については以下のリポジトリでサンプルモデルを入手可能です。
 https://github.com/onnx/models
 
+## サンプル紹介
 
-## サンプル
-
-今回はUnity Sentis上で動作させることができる幾つかのサンプルを通して実際の使用例を見てみましょう。
-
-ちなみにUnity公式からも今回取り上げる以上の複数のサンプルプロジェクトが提供されているため、簡単なアレンジが行いたい方はぜひ参考にしてみてください！
+Unity公式が提供するサンプルプロジェクトを確認しましょう。サンプルは以下のリポジトリで公開されています。
 https://github.com/Unity-Technologies/sentis-samples
 
-### コード
+### 物体検出
+Googleの「MediaPipe」フレームワークを活用した「顔」「手」「姿勢」の検出モデルを利用しています。  
+![Blazeプロジェクトの顔検出の様子](/images/advent_sentis/blaze_face_output.png)
 
-:::details Web Cameraの描画クラス
-```csharp:WebCameraViewer.cs
-using UnityEngine;
+入力データをテンソルに変換する際には、モデルの入力形式を確認することが重要です。たとえば、Blaze-Faceモデルでは以下のような入力形式が求められます：
 
-public class CameraViewer : MonoBehaviour
-{
-    [SerializeField] private RenderTexture outputTexture; // 出力用のRenderTextureをInspectorから設定
-    private WebCamTexture _webCamTexture; // Webカメラの映像を取得するためのWebCamTexture
-    private Material _blitMaterial; // 映像を描画するためのマテリアル
-    
-    void Start()
-    {
-        InitViewer();
-    }
-    
-    void Update()
-    {
-        if (_webCamTexture is null || !_webCamTexture.isPlaying || outputTexture is null) return;
-        Render();
-    }
-    
-    void OnDestroy()
-    {
-        if (_webCamTexture is null) return;
-        _webCamTexture.Stop();
-    }
-    
-    /// <summary>
-    /// 描画するための準備
-    /// </summary>
-    private void InitViewer()
-    {
-        // デバイスのカメラを取得
-        if (WebCamTexture.devices.Length > 0)
-        {
-            _webCamTexture = new WebCamTexture(WebCamTexture.devices[0].name);
-            _webCamTexture.Play();
+1x128x128x3（画像数×画像幅×画像高×色チャンネル）  
 
-            // 映像を描画するためのマテリアルを作成
-            _blitMaterial = new Material(Shader.Find("Unlit/Texture"))
-            {
-                mainTexture = _webCamTexture
-            };
-        }
-        else
-        {
-            Debug.LogError("Web Camera Not Found");
-        }
-    }
+入力形式はモデルのInspectorウィンドウで確認できます：  
+![Blaze-Faceモデルの入力形式](/images/advent_sentis/blaze_input_shape.png)  
 
-    /// <summary>
-    /// 描画処理
-    /// </summary>
-    private void Render()
-    {
-        // RenderTextureに描画
-        RenderTexture.active = outputTexture;
-        GL.Clear(true, true, Color.clear);
-        Graphics.Blit(null, _blitMaterial);
-        // RenderTextureの描画を終了
-        RenderTexture.active = null;
-    }
-    
-    /// <summary>
-    /// 外部からのRenderTexture取得用メソッド
-    /// </summary>
-    /// <returns></returns>
-    public RenderTexture GetRenderTexture()
-    {
-        return outputTexture;
-    }
-}
+テンソルへの変換例は以下の通りです：
+
+```csharp
+// 入力画像をレイアウト指定してテンソルに変換
+var tTrans = new TextureTransform();
+tTrans.SetDimensions(128, 128, 3);
+tTrans.SetTensorLayout(TensorLayout.NHWC);
+TextureConverter.ToTensor(_renderTexture, _inputTensor, tTrans);
 ```
-:::
-
 
 ## 最後に
 
+今回はSentisとそのサンプルプロジェクトを紹介しました。ONNX形式に変換した学習済みモデルをUnityプロジェクト内で手軽に利用できるのは非常に魅力的ですね！今後のさらなる発展が期待されます！  
 
-明日は秋葉原スクールの長、CMのがはくによる記事です！お楽しみに！
-
+明日は秋葉原スクールの長、CMのがはくによる記事をお楽しみに！
