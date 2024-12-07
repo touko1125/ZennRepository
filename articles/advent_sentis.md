@@ -4,13 +4,13 @@ emoji: "🤖"
 type: "tech"
 topics: ["Unity","Sentis","機械学習","アドベントカレンダー"]
 publication_name: "lit_akb"
-published: false
+published: true
 ---
 
 ## はじめに
 こちらの記事は[Akihabara Advent Calendar 2024](https://adventar.org/calendars/10338)の7日目の記事です。  
-✅ 6日目の記事はこちら：[とっぽの何か](https://note.com/risako070310/n/n64fb1a5d138b)  
-✅ 8日目の記事はこちら：[がはくさんの何か]()  
+✅ 6日目の記事はこちら：[「言語化」を考える](https://note.com/risako070310/n/n64fb1a5d138b)  
+✅ 8日目の記事はこちら：[がはくさんのラスベガス滞在記]()  
 
 みなさんこんにちは！初めましての方は初めまして、お久しぶりの方はお久しぶりです。Life is Tech! 秋葉原スクールでUnityコースとAIコースのメンターをしています、しまとーです！  
 
